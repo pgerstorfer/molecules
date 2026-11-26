@@ -112,6 +112,12 @@ controls.autoRotate = true;
 controls.autoRotateSpeed = 0.5;
 controls.maxDistance = 25;  
 
+const zoomClock = new THREE.Clock();
+const baseCameraDistance = camera.position.distanceTo(controls.target);
+const zoomAmplitude = 2;
+const zoomSpeed = 0.35;
+const cameraOffset = new THREE.Vector3();
+
 const effectController = {
 					focusDistance: uniform( 9.5 ),
 					focalLength: uniform( 2.5 ),
@@ -182,6 +188,11 @@ renderPipeline.outputNode = filmPass;
 
 
 function animate() {
+
+                const zoomDistance = baseCameraDistance
+                    + Math.sin(zoomClock.getElapsedTime() * zoomSpeed) * zoomAmplitude;
+                cameraOffset.copy(camera.position).sub(controls.target).normalize();
+                camera.position.copy(controls.target).addScaledVector(cameraOffset, zoomDistance);
 
 				controls.update();
 
