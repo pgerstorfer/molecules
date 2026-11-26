@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wooloo
+* source:	https://sketchfab.com/3d-models/wooloo-5bfaf6aedcaf424386319a7014cfc9a3
+* author:	sec-brear christmas (https://sketchfab.com/sec-brear)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wooloo" (https://sketchfab.com/3d-models/wooloo-5bfaf6aedcaf424386319a7014cfc9a3) by sec-brear christmas (https://sketchfab.com/sec-brear) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
