@@ -117,11 +117,13 @@ const baseCameraDistance = camera.position.distanceTo(controls.target);
 const zoomAmplitude = 2;
 const zoomSpeed = 0.35;
 const cameraOffset = new THREE.Vector3();
+const spherePosition = new THREE.Vector3();
 
 const effectController = {
-					focusDistance: uniform( 9.5 ),
+                    autofocus: true,
+					focusDistance: uniform( camera.position.distanceTo( sphere.position ) ),
 					focalLength: uniform( 2.5 ),
-					bokehScale: uniform( 13.5 ),
+					bokehScale: uniform( 5 ),
 
                     bloomStrength: uniform( 2.2 ),
                     bloomRadius: uniform( 0.5 ),
@@ -141,8 +143,12 @@ const gui = new GUI();
 
                
 const dofFolder = gui.addFolder('Depth of Field');
-dofFolder.add(effectController.focusDistance, 'value', 0, 20, 0.001)
+const focusDistanceController = dofFolder.add(effectController.focusDistance, 'value', 0, 20, 0.001)
   .name('Focus Distance');
+const autofocusController = dofFolder.add(effectController, 'autofocus')
+  .name('Autofocus');
+focusDistanceController.disable(effectController.autofocus);
+autofocusController.onChange((enabled) => focusDistanceController.disable(enabled));
 dofFolder.add(effectController.focalLength, 'value', 1, 10, 0.01)
   .name('Focal Length');
 dofFolder.add(effectController.bokehScale, 'value', 0, 20, 0.01)
@@ -195,6 +201,13 @@ function animate() {
                 camera.position.copy(controls.target).addScaledVector(cameraOffset, zoomDistance);
 
 				controls.update();
+                if (effectController.autofocus) {
+                    camera.getWorldDirection(cameraOffset);
+                    sphere.getWorldPosition(spherePosition);
+                    effectController.focusDistance.value = cameraOffset.dot(
+                        spherePosition.sub(camera.position)
+                    );
+                }
 
 				renderPipeline.render();
 
